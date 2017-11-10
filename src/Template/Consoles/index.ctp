@@ -15,8 +15,4 @@
 			<div class="form-group" id="incomplete-consoles"></div>
 		</form>
 	</div>
-	<div class="task-container">
-		<div id="done-label"><h5>Recently Deleted...</h5></div>
-		<div id="done"></div>
-	</div>
 </div>

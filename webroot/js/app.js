@@ -5,7 +5,6 @@ var ConsoleApp = {};
         $.get('Consoles/get.json', function (response) {
             $label = $('#incomplete-label');
             $incompleteDiv = $('#incomplete-consoles');
-            
             $incompleteDiv.empty();
             if (response.consoles.length === 0) {
                 $label.hide();
@@ -40,7 +39,6 @@ var ConsoleApp = {};
                     if (response.response.result == 'success') {
                         $('#incomplete-' + id).hide('explode');
                         $('#incomplete-' + id).remove();
-                        alert('lol');
                         ConsoleApp.getConsoles();
                         ConsoleApp.getDone();
                     } else if (response.response.result == 'fail') {

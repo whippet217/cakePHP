@@ -144,7 +144,6 @@ class ConsolesController extends AppController
      */
     public function get()
     {
-        
         $consoles = $this->Consoles->find()->all();
         //$consoles = $this->paginate($this->Consoles);
         $this->set(compact('consoles'));
