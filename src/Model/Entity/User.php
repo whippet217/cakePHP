@@ -14,6 +14,10 @@ use Cake\Auth\DefaultPasswordHasher;
  * @property string $email
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property string $uuid
+ * @property bool $is_confirmed
+ *
+ * @property \App\Model\Entity\Wishlist[] $wishlists
  */
 class User extends Entity
 {
@@ -34,8 +38,9 @@ class User extends Entity
         'email' => true,
         'created' => true,
         'modified' => true,
-		'*' => true,
-        'id' => false
+        'uuid' => true,
+        'is_confirmed' => true,
+        'wishlists' => true
     ];
 
     /**

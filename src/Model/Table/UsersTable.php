@@ -9,7 +9,8 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property |\Cake\ORM\Association\HasMany $Wishlists
+ * @property |\Cake\ORM\Association\HasMany $Reviews
+ * @property \App\Model\Table\WishlistsTable|\Cake\ORM\Association\HasMany $Wishlists
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
@@ -40,6 +41,9 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
 
+        $this->hasMany('Reviews', [
+            'foreignKey' => 'user_id'
+        ]);
         $this->hasMany('Wishlists', [
             'foreignKey' => 'user_id'
         ]);
@@ -75,6 +79,14 @@ class UsersTable extends Table
             ->email('email')
             ->requirePresence('email', 'create')
             ->notEmpty('email');
+
+        $validator
+            ->scalar('uuid')
+            ->allowEmpty('uuid');
+
+        $validator
+            ->boolean('is_confirmed')
+            ->allowEmpty('is_confirmed');
 
         return $validator;
     }
