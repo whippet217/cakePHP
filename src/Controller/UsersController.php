@@ -54,22 +54,39 @@ class UsersController extends AppController
      */
     public function add()
     {
+        $this->loadComponent('CakeCaptcha.Captcha', [
+          'captchaConfig' => 'ExampleCaptcha'
+          ]);
+        
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->getData());
             
-            $user->uuid = Text::uuid();
-            $user->is_confirmed = false;
-            
-            if ($this->Users->save($user)) {
-                
-                $this->confirmationMail($user);
-                
-                $this->Flash->success(__('The user has been saved.'));
+            // validate the user-entered Captcha code
+            $isHuman = captcha_validate($this->request->data['CaptchaCode']);
 
-                return $this->redirect(['action' => 'login']);
+            // clear previous user input, since each Captcha code can only be validated once
+            unset($this->request->data['CaptchaCode']);
+            
+            if($isHuman){
+                
+                $user = $this->Users->patchEntity($user, $this->request->getData());
+                
+                $user->uuid = Text::uuid();
+                $user->is_confirmed = false;
+                
+                if ($this->Users->save($user)) {
+                    
+                    $this->confirmationMail($user);
+                    
+                    $this->Flash->success(__('The user has been saved.'));
+
+                    return $this->redirect(['action' => 'login']);
+                }
+                
+                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            }else{
+                $this->Flash->error(__('You\'ve DONE GOOOOOOUF'));
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);

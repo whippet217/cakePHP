@@ -31,11 +31,15 @@
     <fieldset>
         <h2><?= __('Add User') ?></h2>
         <?php
-            if ($loggedUser['isAdmin']) echo $this->Form->control('isAdmin');
-            echo $this->Form->control('username');
-            echo $this->Form->control('password');
-            echo $this->Form->control('email');
+        if ($loggedUser['isAdmin']) echo $this->Form->control('isAdmin');
+        echo $this->Form->control('username');
+        echo $this->Form->control('password');
+        echo $this->Form->control('email');
         ?>
+        <div class="captcha">
+            <?= captcha_image_html() ?>
+            <?= $this->Form->input('CaptchaCode', ['label' => '', 'maxlength' => '10', 'style' => 'width: 270px;margin-left: 30px;', 'id' => 'CaptchaCode']) ?>
+        </div>
     </fieldset>
     <?= $this->Form->button(__('Submit'), array('class' => 'btn btn-primary')) ?>
     <?= $this->Form->end() ?>
