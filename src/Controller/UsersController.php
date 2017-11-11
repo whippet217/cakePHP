@@ -3,6 +3,9 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Utility\Text;
+use Cake\Mailer\Email;
+use Cake\Routing\Router;
 
 /**
  * Users Controller
@@ -38,7 +41,7 @@ class UsersController extends AppController
     {
         $user = $this->Users->get($id, [
             'contain' => []
-        ]);
+            ]);
 
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
@@ -54,7 +57,14 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+            
+            $user->uuid = Text::uuid();
+            $user->is_confirmed = false;
+            
             if ($this->Users->save($user)) {
+                
+                $this->confirmationMail($user);
+                
                 $this->Flash->success(__('The user has been saved.'));
 
                 return $this->redirect(['action' => 'login']);
@@ -63,6 +73,41 @@ class UsersController extends AppController
         }
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
+    }
+    
+    private function confirmationMail($user){
+        
+        $confirmLink = Router::url(['controller' => 'Users', 'action' => 'confirm', $user->uuid], true);
+        
+        $email = new Email('default');
+        
+        $email
+        ->to($user->email)
+        ->subject('Fuck You')
+        ->emailFormat('html')
+        ->send($confirmLink);
+    }
+    
+    public function confirm($uuid)
+    {
+        $user = $this->Users->find('all')->where(['uuid' => $uuid])->first();
+        
+        if($user != null){
+            if($user->is_confirmed){
+                $this->Flash->error(__('Are you fucking gay?'));
+            }else{
+                $user = $this->Users->patchEntity($user, ['is_confirmed' => true]);
+                if ($this->Users->save($user)) {
+                    $this->Flash->success(__('HOLY SHIT YOU ARE SO GOOD (faggot).'));
+                    
+                }else{
+                    $this->Flash->error(__('WTF IS GOING ON?'));
+                }
+            }
+            
+        }
+        
+        return $this->redirect(['action' => 'login']);
     }
 
     /**
@@ -76,7 +121,7 @@ class UsersController extends AppController
     {
         $user = $this->Users->get($id, [
             'contain' => []
-        ]);
+            ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
@@ -109,14 +154,14 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
-	
-	public function beforeFilter(Event $event)
+    
+    public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
         // Allow users to register and logout.
         // You should not add the "login" action to allow list. Doing so would
         // cause problems with normal functioning of AuthComponent.
-        $this->Auth->allow(['add', 'logout']);
+        $this->Auth->allow(['add', 'logout', 'confirm']);
     }
     
     public function login()
@@ -124,28 +169,28 @@ class UsersController extends AppController
         if ($this->request->is('post')) {
             $user = $this->Auth->identify();
             if ($user) {
-                 $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
-            }
-            $this->Flash->error(__('Invalid username or password, try again'));
-        }
-    }
+               $this->Auth->setUser($user);
+               return $this->redirect($this->Auth->redirectUrl());
+           }
+           $this->Flash->error(__('Invalid username or password, try again'));
+       }
+   }
 
-    public function logout()
-    {
-        return $this->redirect($this->Auth->logout());
-    }
+   public function logout()
+   {
+    return $this->redirect($this->Auth->logout());
+}
+
+public function isAuthorized($user){
     
-    public function isAuthorized($user){
-        
         // The owner of an account can edit and delete it
-        if (in_array($this->request->getParam('action'), ['edit', 'delete'])) {
-            $userId = (int)$this->request->getParam('pass.0');
-            if ($userId == $user['id']) {
-                return true;
-            }
+    if (in_array($this->request->getParam('action'), ['edit', 'delete'])) {
+        $userId = (int)$this->request->getParam('pass.0');
+        if ($userId == $user['id']) {
+            return true;
         }
-
-        return parent::isAuthorized($user);
     }
+
+    return parent::isAuthorized($user);
+}
 }
