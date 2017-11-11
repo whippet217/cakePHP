@@ -53,6 +53,7 @@
                 <td><?= h($developer->modified) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $developer->id]) ?>
+                    <?= $this->Html->link('(pdf)', ['action' => 'view', $developer->id . '.pdf']) ?>
                     <?php if ($loggedUser['isAdmin']): ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit', $developer->id]) ?>
                         <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $developer->id], ['confirm' => __('Are you sure you want to delete # {0}?', $developer->id)]) ?>
