@@ -11,6 +11,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ConsolesTable|\Cake\ORM\Association\BelongsTo $Consoles
  * @property \App\Model\Table\DevelopersTable|\Cake\ORM\Association\BelongsTo $Developers
+ * @property |\Cake\ORM\Association\BelongsTo $Subcategories
  * @property \App\Model\Table\WishlistsTable|\Cake\ORM\Association\HasMany $Wishlists
  * @property \App\Model\Table\FilesTable|\Cake\ORM\Association\BelongsToMany $Files
  *
@@ -42,7 +43,6 @@ class ProductsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
-        $this->addBehavior('Translate', ['fields' => ['description']]);
 
         $this->belongsTo('Consoles', [
             'foreignKey' => 'console_id'
@@ -50,6 +50,9 @@ class ProductsTable extends Table
         $this->belongsTo('Developers', [
             'foreignKey' => 'developer_id',
             'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('Subcategories', [
+            'foreignKey' => 'subcategory_id'
         ]);
         $this->hasMany('Wishlists', [
             'foreignKey' => 'product_id'
@@ -100,6 +103,7 @@ class ProductsTable extends Table
     {
         $rules->add($rules->existsIn(['console_id'], 'Consoles'));
         $rules->add($rules->existsIn(['developer_id'], 'Developers'));
+        $rules->add($rules->existsIn(['subcategory_id'], 'Subcategories'));
 
         return $rules;
     }

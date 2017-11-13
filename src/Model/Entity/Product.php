@@ -14,7 +14,10 @@ use Cake\ORM\Entity;
  * @property string $description
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime $modified
+ * @property int $subcategory_id
  *
+ * @property \App\Model\Entity\ProductsDescriptionTranslation $description_translation
+ * @property \App\Model\Entity\I18n[] $_i18n
  * @property \App\Model\Entity\Console $console
  * @property \App\Model\Entity\Developer $developer
  * @property \App\Model\Entity\Wishlist[] $wishlists
@@ -40,6 +43,9 @@ class Product extends Entity
         'description' => true,
         'created' => true,
         'modified' => true,
+        'subcategory_id' => true,
+        'description_translation' => true,
+        '_i18n' => true,
         'console' => true,
         'developer' => true,
         'wishlists' => true,

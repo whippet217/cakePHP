@@ -25,11 +25,13 @@ class ProductsFixture extends TestFixture
         'description' => ['type' => 'text', 'length' => null, 'null' => true, 'default' => null, 'precision' => null, 'comment' => null, 'collate' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'precision' => null, 'comment' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'precision' => null, 'comment' => null],
+        'subcategory_id' => ['type' => 'integer', 'length' => null, 'unsigned' => false, 'null' => true, 'default' => null, 'precision' => null, 'comment' => null, 'autoIncrement' => null],
         '_indexes' => [
             'developer_id' => ['type' => 'index', 'columns' => ['developer_id'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+            'subcategory_id_fk' => ['type' => 'foreign', 'columns' => ['subcategory_id'], 'references' => ['subcategories', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
             'developer_id_fk' => ['type' => 'foreign', 'columns' => ['developer_id'], 'references' => ['developers', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
             'console_id_fk' => ['type' => 'foreign', 'columns' => ['console_id'], 'references' => ['consoles', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
         ],
@@ -49,8 +51,9 @@ class ProductsFixture extends TestFixture
             'used' => 1,
             'developer_id' => 1,
             'description' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'created' => '2017-10-02 01:12:10',
-            'modified' => '2017-10-02 01:12:10'
+            'created' => '2017-11-13 18:40:22',
+            'modified' => '2017-11-13 18:40:22',
+            'subcategory_id' => 1
         ],
     ];
 }
