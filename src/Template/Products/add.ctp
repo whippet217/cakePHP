@@ -56,7 +56,7 @@ $this->Html->script('Products/add', ['block' => true]);
         <?php
             echo $this->Form->control('name');
             echo $this->Form->control('console_id', ['options' => $consoles]);
-            echo $this->Form->input('Category_id', ['options' => $categories]);
+            echo $this->Form->input('category_id', ['options' => $categories]);
             echo $this->Form->input('subcategory_id', ['options' => $subcategories]);
             echo $this->Form->control('used');
             echo $this->Form->control('developer_id', ['options' => $developers]);

@@ -1,4 +1,14 @@
 <?php
+$urlToLinkedListFilter = $this->Url->build([
+    "controller" => "Subcategories",
+    "action" => "getByCategory",
+    "_ext" => "json"
+        ]);
+$this->Html->scriptBlock('var urlToLinkedListFilter = "' . $urlToLinkedListFilter . '";', ['block' => true]);
+$this->Html->script('Products/edit', ['block' => true]);
+?>
+
+<?php
 /**
  * @var \App\View\AppView $this
  */
@@ -9,11 +19,6 @@
         <div class="row">
             <div class="col-lg-8 col-md-7 col-sm-6">
                 <h1><?= __('Actions') ?></h1>
-            </div>
-            <div class="col-lg-4 col-md-5 col-sm-6">
-                <div class="sponsor">
-                    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=bootswatchcom" id="_carbonads_js"></script>
-                </div>
             </div>
         </div>
         <div class="row">
@@ -44,6 +49,8 @@
         <?php
             echo $this->Form->control('name');
             echo $this->Form->control('console_id', ['options' => $consoles]);
+            echo $this->Form->control('subcategory.category_id');
+            echo $this->Form->control('subcategory_id');
             echo $this->Form->control('used');
             echo $this->Form->control('developer_id', ['options' => $developers]);
             echo $this->Form->control('description');

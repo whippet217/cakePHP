@@ -96,7 +96,7 @@ class ProductsController extends AppController
     public function edit($id = null)
     {
         $product = $this->Products->get($id, [
-            'contain' => ['Files']
+            'contain' => ['Subcategories' => ['Categories'], 'Files']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $product = $this->Products->patchEntity($product, $this->request->getData());
@@ -108,9 +108,22 @@ class ProductsController extends AppController
             $this->Flash->error(__('The product could not be saved. Please, try again.'));
         }
         $consoles = $this->Products->Consoles->find('list', ['limit' => 200]);
+        
+        // Bâtir la liste des catégories  
+        $this->loadModel('Categories');
+        $categories = $this->Categories->find('list', ['limit' => 200]);
+
+        // Extraire le id de la première catégorie
+        // $categories = $categories->toArray();
+        // reset($categories);
+        // $category_id = key($categories);
+
+        // Bâtir la liste des sous-catégories reliées à cette catégorie
+        $subcategories = $this->Products->Subcategories->find('list')->where(['category_id' => $product->subcategory->category->id]);
+        
         $developers = $this->Products->Developers->find('list', ['limit' => 200]);
         $files = $this->Products->Files->find('list', ['limit' => 200]);
-        $this->set(compact('product', 'consoles', 'developers', 'files'));
+        $this->set(compact('product', 'consoles', 'subcategories', 'categories', 'developers', 'files'));
         $this->set('_serialize', ['product']);
     }
 

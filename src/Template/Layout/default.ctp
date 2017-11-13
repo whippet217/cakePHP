@@ -85,6 +85,9 @@
     </div>
 
     <footer>
+        <div class="sponsor">
+            <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=bootswatchcom" id="_carbonads_js"></script>
+        </div>
     </footer>
 </body>
 </html>
