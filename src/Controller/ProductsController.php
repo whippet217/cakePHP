@@ -146,4 +146,22 @@ class ProductsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function findProducts() {
+
+        if ($this->request->is('ajax')) {
+
+            $this->autoRender = false;
+            $name = $this->request->query['term'];
+            $results = $this->Products->find('all', array(
+                'conditions' => array('Products.name LIKE ' => '%' . $name . '%')
+            ));
+
+            $resultArr = array();
+            foreach ($results as $result) {
+                $resultArr[] = array('label' => $result['name'], 'value' => $result['name']);
+            }
+            echo json_encode($resultArr);
+        }
+    }
 }

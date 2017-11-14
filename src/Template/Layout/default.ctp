@@ -8,13 +8,11 @@
     
     <?= $this->Html->css('base.css') ?>
     <?= $this->Html->css('cake.css') ?>
-    <?= $this->Html->script('jquery-3.2.1.min.js'); ?>
-    <?= $this->Html->script('bootstrap.min.js') ?>
     <?= $this->Html->css('bootstrap.min.css') ?>
 
     
     <?= $this->fetch('meta') ?>
-    <?= $this->fetch('script') ?>
+    
     <?= $this->fetch('css') ?>
     
 </head>
@@ -38,7 +36,10 @@
                     <li><?= $this->Html->link(__('Consoles'), ['controller' => 'consoles']) ?></li>
                     <?php if($loggedUser['isAdmin']) { ?>
                     <li><?= $this->Html->link(__('Files'), ['controller' => 'files']) ?></li>
+                    <li><?= $this->Html->link(__('Categories'), ['controller' => 'categories']) ?></li>
+                    <li><?= $this->Html->link(__('Subcategories'), ['controller' => 'subcategories']) ?></li>
                     <?php } ?>
+                    <li><?= $this->Html->link(__('À Propos'), ['controller' => 'apropos']) ?></li>
 
                 </ul>
 
@@ -85,9 +86,18 @@
     </div>
 
     <footer>
+    <?= $this->Html->script('https://code.jquery.com/jquery-1.12.4.js'); ?>
+    <?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'); ?>
+    <?= $this->Html->script('https://code.jquery.com/ui/1.12.1/jquery-ui.js'); ?>
+    <?= $this->Html->script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'); ?>
+    
+    <?= $this->fetch('script') ?>
+    <?= $this->fetch('scriptBottom')?>
+    
         <div class="sponsor">
             <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=bootswatchcom" id="_carbonads_js"></script>
         </div>
+        
     </footer>
 </body>
 </html>

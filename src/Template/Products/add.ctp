@@ -5,7 +5,7 @@ $urlToLinkedListFilter = $this->Url->build([
     "_ext" => "json"
         ]);
 $this->Html->scriptBlock('var urlToLinkedListFilter = "' . $urlToLinkedListFilter . '";', ['block' => true]);
-$this->Html->script('Products/add', ['block' => true]);
+$this->Html->script('Products/add', ['block' => 'scriptBottom']);
 ?>
 
 <?php
@@ -19,11 +19,6 @@ $this->Html->script('Products/add', ['block' => true]);
             <div class="col-lg-8 col-md-7 col-sm-6">
                 <h1><?= __('Actions') ?></h1>
             </div>
-            <div class="col-lg-4 col-md-5 col-sm-6">
-                <div class="sponsor">
-                    <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?zoneid=1673&serve=C6AILKT&placement=bootswatchcom" id="_carbonads_js"></script>
-                </div>
-            </div>
         </div>
         <div class="row">
             <div class="col-lg-12 col-md-3 col-sm-4">
@@ -31,7 +26,7 @@ $this->Html->script('Products/add', ['block' => true]);
                 <?php if ($loggedUser !== null): ?>
                 
                     <?php if ($loggedUser['isAdmin']): ?>
-                        <?= $this->Html->link(__('New Console'), ['controller' => 'Consoles', 'action' => 'add']) ?>
+                        <?= $this->Html->link(__('New Console'), ['controller' => 'Consoles', 'action' => 'add'], array('class' => 'list-group-item')) ?>
                         <?= $this->Html->link(__('New Developer'), ['controller' => 'Developers', 'action' => 'add'], array('class' => 'list-group-item')) ?>
                     <?php endif; ?>
                         <?= $this->Html->link(__('New Wishlist'), ['controller' => 'Wishlists', 'action' => 'add'], array('class' => 'list-group-item')) ?>

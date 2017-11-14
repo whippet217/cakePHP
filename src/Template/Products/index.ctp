@@ -1,4 +1,14 @@
 <?php
+$urlToProductsIndexJson = $this->Url->build([
+    "controller" => "Products",
+    "action" => "findProducts",
+    "_ext" => "json"
+        ]);
+echo $this->Html->scriptBlock('var urlToAutocompleteAction = "' . $urlToProductsIndexJson . '";', ['block' => true]);
+echo $this->Html->script('Products/index', ['block' => 'scriptBottom']);
+?>
+
+<?php
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Product[]|\Cake\Collection\CollectionInterface $products
@@ -86,6 +96,7 @@
             <?= $this->Paginator->last(__('last') . ' >>') ?>
         </ul>
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+        <?= $this->Form->input('Search', ['id' => 'autocomplete']); ?>
     </div>
 
 </div>
