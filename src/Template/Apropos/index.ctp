@@ -36,5 +36,11 @@
     420-267 MO Développer un site Web et une application pour Internet.<br>
     Automne 2017, Collège Montmorency.
     </h4>
+    
+<h4>
+BD Utilisé :<br>
+<?= $this->Html->image('bd.PNG', ['alt' => 'BD']); ?>
+
+Diagramme BD Original:<br> <?= $this->Html->link('http://www.databaseanswers.org/data_models/game_shop/index.htm'); ?>
 
 </div>
