@@ -2,6 +2,7 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\ConsolesController;
+use Cake\Routing\Router;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
@@ -17,61 +18,125 @@ class ConsolesControllerTest extends IntegrationTestCase
      */
     public $fixtures = [
         'app.consoles',
-        'app.products',
-        'app.developers',
-        'app.wishlists',
-        'app.users',
-        'app.files',
-        'app.products_files'
     ];
 
     /**
-     * Test index method
+     * test add() method
      *
      * @return void
      */
-    public function testIndex()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+    public function testAdd() {
+        
+        $this->session([
+            'Auth' => [
+                'User' => [
+                    'id' => 1,
+                    'isAdmin' => true
+                    ]
+                ]
+            ]
+        );
+        
+        $this->configRequest([
+            'headers' => ['Accept' => 'application/json']
+        ]);
+
+        $this->post(Router::url(
+                        ['controller' => 'consoles',
+                            'action' => 'add',
+                            '_ext' => 'json'
+                ]), ['name' => 'run test']);
+
+        $this->assertResponseSuccess();
+        $expected = [
+            'response' => ['result' => 'success'],
+        ];
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, $this->_response->body());
     }
 
-    /**
-     * Test view method
+        /**
+     * test edit() method
      *
      * @return void
      */
-    public function testView()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+    public function testEdit() {
+        
+        $this->session([
+            'Auth' => [
+                'User' => [
+                    'id' => 1,
+                    'isAdmin' => true
+                    ]
+                ]
+            ]
+        );
+        
+        $this->configRequest([
+            'headers' => ['Accept' => 'application/json']
+        ]);
 
-    /**
-     * Test add method
-     *
-     * @return void
-     */
-    public function testAdd()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        $this->post(Router::url(
+                        ['controller' => 'consoles',
+                            'action' => 'edit',
+                            '_ext' => 'json',
+                            1
+                ]), ['name' => 'edit test']);
 
-    /**
-     * Test edit method
-     *
-     * @return void
-     */
-    public function testEdit()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->assertResponseSuccess();
+        $expected = [
+            'response' => ['result' => 'success'],
+        ];
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, $this->_response->body());
     }
-
+    
     /**
-     * Test delete method
+     * test delete() method
      *
      * @return void
      */
-    public function testDelete()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+    public function testDelete() {
+        
+        $this->session([
+            'Auth' => [
+                'User' => [
+                    'id' => 1,
+                    'isAdmin' => true
+                    ]
+                ]
+            ]
+        );
+        
+        $this->configRequest([
+            'headers' => [
+                'Accept' => 'application/json'
+            ]
+        ]);
+
+        $this->get(Router::url(
+                        ['controller' => 'consoles',
+                            'action' => 'delete',
+                            '_ext' => 'json',
+                            1
+                ])
+        );
+        $this->assertResponseSuccess();
+        $expected = [
+            'response' => ['result' => 'success'],
+        ];
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, $this->_response->body());
+
+        // get completed to-do's
+        $this->post(Router::url(
+                        ['controller' => 'todos',
+                            'action' => 'get',
+                            '_ext' => 'json',
+                            1
+                ])
+        );
+        $this->assertResponseSuccess();
+        $this->assertResponseContains($this->_response->body());
     }
 }
