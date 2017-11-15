@@ -46,11 +46,22 @@ class ProductsFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet',
+            'name' => 'ichthyolatrous',
             'console_id' => 1,
-            'used' => 1,
+            'used' => false,
             'developer_id' => 1,
-            'description' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+            'description' => 'gnatling quartzy Cabirian spread sursolid occupational unwormy wifeling eductive pictorically moissanite cerebroma miteproof collet wi pentahexahedron metagraphic syntonic hymnologist cluricaune generative subserrate parallelizer overflog',
+            'created' => '2017-11-13 18:40:22',
+            'modified' => '2017-11-13 18:40:22',
+            'subcategory_id' => 1
+        ],
+        [
+            'id' => 2,
+            'name' => 'parapsychism',
+            'console_id' => 1,
+            'used' => false,
+            'developer_id' => 1,
+            'description' => 'Symbranchia bambini manege modalist turnerite bimotored cognatical toolmark pedological trisodium quadrifariously allamotti brogue ascendance nihilianism ignominy mollify tabooism dilutive mizzle sulphuric shamateur potwaller marchantiaceous',
             'created' => '2017-11-13 18:40:22',
             'modified' => '2017-11-13 18:40:22',
             'subcategory_id' => 1

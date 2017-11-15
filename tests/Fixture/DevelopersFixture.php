@@ -36,8 +36,8 @@ class DevelopersFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet',
-            'email' => 'Lorem ipsum dolor sit amet',
+            'name' => 'phascaceous',
+            'email' => 'feoff@tankle.edu',
             'created' => '2017-10-02 01:12:06',
             'modified' => '2017-10-02 01:12:06'
         ],

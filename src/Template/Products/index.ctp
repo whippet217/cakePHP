@@ -5,7 +5,7 @@ $urlToProductsIndexJson = $this->Url->build([
     "_ext" => "json"
         ]);
 echo $this->Html->scriptBlock('var urlToAutocompleteAction = "' . $urlToProductsIndexJson . '";', ['block' => true]);
-echo $this->Html->script('Products/index', ['block' => 'scriptBottom']);
+echo $this->Html->script('Products/index', ['block' => true]);
 ?>
 
 <?php

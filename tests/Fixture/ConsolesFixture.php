@@ -35,7 +35,7 @@ class ConsolesFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet',
+            'name' => 'loosen',
             'created' => '2017-10-02 01:12:02',
             'modified' => '2017-10-02 01:12:02'
         ],

@@ -36,7 +36,7 @@ class SubcategoriesFixture extends TestFixture
         [
             'id' => 1,
             'category_id' => 1,
-            'name' => 'Lorem ipsum dolor sit amet'
+            'name' => 'overwinter'
         ],
     ];
 }
