@@ -109,16 +109,9 @@ class ProductsController extends AppController
         }
         $consoles = $this->Products->Consoles->find('list', ['limit' => 200]);
         
-        // Bâtir la liste des catégories  
         $this->loadModel('Categories');
         $categories = $this->Categories->find('list', ['limit' => 200]);
 
-        // Extraire le id de la première catégorie
-        $categories = $categories->toArray();
-        reset($categories);
-        $category_id = key($categories);
-
-        // Bâtir la liste des sous-catégories reliées à cette catégorie
         $subcategories = $this->Products->Subcategories->find('list')->where(['category_id' => $product->subcategory->category->id]);
         
         $developers = $this->Products->Developers->find('list', ['limit' => 200]);

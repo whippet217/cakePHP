@@ -41,9 +41,9 @@ class UsersFixture extends TestFixture
         [
             'id' => 1,
             'isAdmin' => 1,
-            'username' => 'Lorem ipsum dolor sit amet',
-            'password' => 'Lorem ipsum dolor sit amet',
-            'email' => 'Lorem ipsum dolor sit amet',
+            'username' => 'admin',
+            'password' => 'admin',
+            'email' => 'admin@gmail.com',
             'created' => '2017-11-11 20:14:33',
             'modified' => '2017-11-11 20:14:33',
             'uuid' => 'Lorem ipsum dolor sit amet',

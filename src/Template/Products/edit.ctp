@@ -5,7 +5,7 @@ $urlToLinkedListFilter = $this->Url->build([
     "_ext" => "json"
         ]);
 $this->Html->scriptBlock('var urlToLinkedListFilter = "' . $urlToLinkedListFilter . '";', ['block' => true]);
-$this->Html->script('Products/edit', ['block' => true]);
+$this->Html->script('Products/edit', ['block' => 'scriptBottom']);
 ?>
 
 <?php
@@ -49,7 +49,7 @@ $this->Html->script('Products/edit', ['block' => true]);
         <?php
             echo $this->Form->control('name');
             echo $this->Form->control('console_id', ['options' => $consoles]);
-            echo $this->Form->control('subcategory.category_id');
+            echo $this->Form->control('category_id', ['value' => $product->subcategory['category_id']]);
             echo $this->Form->control('subcategory_id');
             echo $this->Form->control('used');
             echo $this->Form->control('developer_id', ['options' => $developers]);

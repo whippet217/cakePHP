@@ -1,7 +1,6 @@
 $(document).ready(function () {
     // The path to action from CakePHP is in urlToLinkedListFilter 
     $('#category-id').on('change', function () {
-        console.log('hello');
         var categoryId = $(this).val();
         if (categoryId) {
             $.ajax({
