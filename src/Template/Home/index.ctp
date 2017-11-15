@@ -26,6 +26,12 @@
         Password: Zach
         </p>
     </div>
+    
+    <h3>Detail</h3>
+    <p>
+    Ajax: Consoles<br>
+    AutoCompletion: Products<br>
+    Linked List: Products
 </div>
 
 <div class="footer">

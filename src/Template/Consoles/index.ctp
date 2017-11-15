@@ -15,4 +15,5 @@
 			<div class="form-group" id="incomplete-consoles"></div>
 		</form>
 	</div>
+	<h4>*Seul un administrateur peut Ajouter/modifier/supprimer une console</h4>
 </div>
