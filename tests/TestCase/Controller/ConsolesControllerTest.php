@@ -127,16 +127,40 @@ class ConsolesControllerTest extends IntegrationTestCase
         ];
         $expected = json_encode($expected, JSON_PRETTY_PRINT);
         $this->assertEquals($expected, $this->_response->body());
+    }
+    
+        /**
+     * test get() method
+     *
+     * @return void
+     */
+    public function testGet() {
+        $this->configRequest([
+            'headers' => [
+                'Accept' => 'application/json'
+            ]
+        ]);
 
-        // get completed to-do's
         $this->post(Router::url(
-                        ['controller' => 'todos',
+                        ['controller' => 'consoles',
                             'action' => 'get',
-                            '_ext' => 'json',
-                            1
+                            '_ext' => 'json'
                 ])
         );
-        $this->assertResponseSuccess();
-        $this->assertResponseContains($this->_response->body());
+        $this->assertResponseOk();
+
+        $expected = [
+            'consoles' =>
+            [
+                [
+                    'id' => 1,
+                    'name' => 'loosen',
+                    'created' => '2017-10-02T01:12:02+00:00',
+                    'modified' => '2017-10-02T01:12:02+00:00'
+                ]
+            ],
+        ];
+        $expected = json_encode($expected, JSON_PRETTY_PRINT);
+        $this->assertEquals($expected, $this->_response->body());
     }
 }
