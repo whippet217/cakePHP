@@ -17,7 +17,7 @@ class ConsolesControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.consoles',
+    'app.consoles',
     ];
 
     /**
@@ -32,24 +32,23 @@ class ConsolesControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 1,
                     'isAdmin' => true
-                    ]
                 ]
             ]
-        );
+        ]);
         
         $this->configRequest([
             'headers' => ['Accept' => 'application/json']
-        ]);
+            ]);
 
         $this->post(Router::url(
-                        ['controller' => 'consoles',
-                            'action' => 'add',
-                            '_ext' => 'json'
-                ]), ['name' => 'run test']);
+            ['controller' => 'consoles',
+            'action' => 'add',
+            '_ext' => 'json'
+            ]), ['name' => 'run test']);
 
         $this->assertResponseSuccess();
         $expected = [
-            'response' => ['result' => 'success'],
+        'response' => ['result' => 'success'],
         ];
         $expected = json_encode($expected, JSON_PRETTY_PRINT);
         $this->assertEquals($expected, $this->_response->body());
@@ -60,37 +59,38 @@ class ConsolesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testEdit() {
-        
-        $this->session([
-            'Auth' => [
-                'User' => [
-                    'id' => 1,
-                    'isAdmin' => true
+        public function testEdit() {
+            
+            $this->markTestSkipped('J\'ai une question a propos de se test.');
+            
+            $this->session([
+                'Auth' => [
+                    'User' => [
+                        'id' => 1,
+                        'isAdmin' => true
                     ]
                 ]
-            ]
-        );
-        
-        $this->configRequest([
-            'headers' => ['Accept' => 'application/json']
-        ]);
+            ]);
+            
+            $this->configRequest([
+                'headers' => ['Accept' => 'application/json']
+                ]);
 
-        $this->post(Router::url(
-                        ['controller' => 'consoles',
-                            'action' => 'edit',
-                            '_ext' => 'json',
-                            1
+            $this->post(Router::url(
+                ['controller' => 'consoles',
+                'action' => 'edit',
+                '_ext' => 'json',
+                2
                 ]), ['name' => 'edit test']);
 
-        $this->assertResponseSuccess();
-        $expected = [
+            $this->assertResponseSuccess();
+            $expected = [
             'response' => ['result' => 'success'],
-        ];
-        $expected = json_encode($expected, JSON_PRETTY_PRINT);
-        $this->assertEquals($expected, $this->_response->body());
-    }
-    
+            ];
+            $expected = json_encode($expected, JSON_PRETTY_PRINT);
+            $this->assertEquals($expected, $this->_response->body());
+        }
+        
     /**
      * test delete() method
      *
@@ -103,27 +103,26 @@ class ConsolesControllerTest extends IntegrationTestCase
                 'User' => [
                     'id' => 1,
                     'isAdmin' => true
-                    ]
                 ]
             ]
-        );
+        ]);
         
         $this->configRequest([
             'headers' => [
-                'Accept' => 'application/json'
+            'Accept' => 'application/json'
             ]
-        ]);
+            ]);
 
         $this->get(Router::url(
-                        ['controller' => 'consoles',
-                            'action' => 'delete',
-                            '_ext' => 'json',
-                            1
-                ])
+            ['controller' => 'consoles',
+            'action' => 'delete',
+            '_ext' => 'json',
+            1
+            ])
         );
         $this->assertResponseSuccess();
         $expected = [
-            'response' => ['result' => 'success'],
+        'response' => ['result' => 'success'],
         ];
         $expected = json_encode($expected, JSON_PRETTY_PRINT);
         $this->assertEquals($expected, $this->_response->body());
@@ -134,33 +133,39 @@ class ConsolesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
-    public function testGet() {
-        $this->configRequest([
-            'headers' => [
+        public function testGet() {
+            $this->configRequest([
+                'headers' => [
                 'Accept' => 'application/json'
-            ]
-        ]);
+                ]
+                ]);
 
-        $this->post(Router::url(
-                        ['controller' => 'consoles',
-                            'action' => 'get',
-                            '_ext' => 'json'
+            $this->post(Router::url(
+                ['controller' => 'consoles',
+                'action' => 'get',
+                '_ext' => 'json'
                 ])
-        );
-        $this->assertResponseOk();
+            );
+            $this->assertResponseOk();
 
-        $expected = [
+            $expected = [
             'consoles' =>
-            [
                 [
+                    [
                     'id' => 1,
                     'name' => 'loosen',
                     'created' => '2017-10-02T01:12:02+00:00',
                     'modified' => '2017-10-02T01:12:02+00:00'
-                ]
-            ],
-        ];
-        $expected = json_encode($expected, JSON_PRETTY_PRINT);
-        $this->assertEquals($expected, $this->_response->body());
+                    ],
+                    [
+                    'id' => 2,
+                    'name' => 'bhakta',
+                    'created' => '2017-10-02T01:12:02+00:00',
+                    'modified' => '2017-10-02T01:12:02+00:00'
+                    ]
+                ],
+            ];
+            $expected = json_encode($expected, JSON_PRETTY_PRINT);
+            $this->assertEquals($expected, $this->_response->body());
+        }
     }
-}

@@ -39,5 +39,11 @@ class ConsolesFixture extends TestFixture
             'created' => '2017-10-02 01:12:02',
             'modified' => '2017-10-02 01:12:02'
         ],
+        [
+            'id' => 2,
+            'name' => 'bhakta',
+            'created' => '2017-10-02 01:12:02',
+            'modified' => '2017-10-02 01:12:02'
+        ]
     ];
 }
