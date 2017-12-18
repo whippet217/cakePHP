@@ -1,11 +1,18 @@
 <?php
+$urlCategoriesListFilter = $this->Url->build([
+    "controller" => "Categories",
+    "action" => "getCategories",
+    "_ext" => "json"
+        ]);
 $urlToLinkedListFilter = $this->Url->build([
     "controller" => "Subcategories",
     "action" => "getByCategory",
     "_ext" => "json"
         ]);
+
+$this->Html->scriptBlock('var urlCategoriesListFilter = "' . $urlCategoriesListFilter . '";', ['block' => true]);
 $this->Html->scriptBlock('var urlToLinkedListFilter = "' . $urlToLinkedListFilter . '";', ['block' => true]);
-$this->Html->script('Products/add', ['block' => 'scriptBottom']);
+$this->Html->script('Products/addAngular', ['block' => 'scriptBottom']);
 ?>
 
 <?php
@@ -44,15 +51,38 @@ $this->Html->script('Products/add', ['block' => 'scriptBottom']);
     </div>
 </nav>
 
-<div class="products form large-9 medium-8 columns content">
+<div class="products form large-9 medium-8 columns content" ng-app="linkedlists" ng-controller="categoriesController">
     <?= $this->Form->create($product) ?>
     <fieldset>
         <h2><?= __('Add Product') ?></h2>
         <?php
             echo $this->Form->control('name');
             echo $this->Form->control('console_id', ['options' => $consoles]);
-            echo $this->Form->input('category_id', ['options' => $categories]);
-            echo $this->Form->input('subcategory_id', ['options' => $subcategories]);
+            //echo $this->Form->input('category_id', ['options' => $categories]);
+            //echo $this->Form->input('subcategory_id', 'type' => 'select', , ['options' => $subcategories]);
+        ?>
+            <div>
+                Categories: 
+                <select name="Category_id"
+                        id="category-id" 
+                        ng-model="category" 
+                        ng-options="category.name for category in categories track by category.id"
+                        >
+                    <option value=''>Select</option>
+                </select>
+            </div>
+            <div>
+                Subcategories: 
+                <select name="subcategory_id"
+                        id="subcategory-id" 
+                        ng-disabled="!category" 
+                        ng-model="subcategory"
+                        ng-options="subcategory.name for subcategory in category.subcategories track by subcategory.id"
+                        >
+                    <option value=''>Select</option>
+                </select>
+            </div>
+        <?php
             echo $this->Form->control('used');
             echo $this->Form->control('developer_id', ['options' => $developers]);
             echo $this->Form->control('description');

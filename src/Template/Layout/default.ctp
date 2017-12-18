@@ -10,10 +10,10 @@
     <?= $this->Html->css('cake.css') ?>
     <?= $this->Html->css('bootstrap.min.css') ?>
 
-    
     <?= $this->fetch('meta') ?>
-    
     <?= $this->fetch('css') ?>
+    <?= $this->fetch('script') ?>
+    
     
 </head>
 
@@ -90,6 +90,7 @@
     <?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'); ?>
     <?= $this->Html->script('https://code.jquery.com/ui/1.12.1/jquery-ui.js'); ?>
     <?= $this->Html->script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'); ?>
+    <?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js') ?>
     
     <?= $this->fetch('script') ?>
     <?= $this->fetch('scriptBottom')?>
