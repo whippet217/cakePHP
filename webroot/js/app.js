@@ -1,116 +1,131 @@
-var ConsoleApp = {};
+// angular js codes will be here
+var app = angular.module('CakephpAngularjs', []);
+app.controller('consolesCtrl', function ($scope, $http) {
+    // more angular JS codes will be here
+    $scope.showCreateForm = function () {
+        // clear form
+        $scope.clearForm();
 
-(function () {
-    ConsoleApp.getConsoles = function () {
-        $.get('Consoles/get.json', function (response) {
-            $label = $('#incomplete-label');
-            $incompleteDiv = $('#incomplete-consoles');
-            $incompleteDiv.empty();
-            if (response.consoles.length === 0) {
-                $label.hide();
-                $incompleteDiv.append('<div class="incomplete-console">Empty, add a new console above.</div>');
-            } else {
-                $label.show();
-                $.each(response.consoles, function (key, value) {
-                    $incompleteDiv.append('<div class="incomplete-console" id="incomplete-' + value.id + '">' +
-                            '<input id="consoleText_' + value.id + '" class="form-control no-border submitButton" value="' + value.name + '" type="text" readonly> ' +
-                            '<button id="consoleEdit_' + value.id + '" class="form-control btn-xs editButton" type="button">Edit</button>' +
-                            '<input id="console_' + value.id + '" class="console-checked" type="checkbox" />' +
-                            '</label><div class="small-done">' + value.created + '</div></div>');
-                    $incompleteDiv.show('highlight');
+        // change modal title
+        $('#modal-console-title').text("Create New ");
+
+        // hide update console button
+        $('#btn-update-console').hide();
+
+        // show create console button
+        $('#btn-create-console').show();
+
+    }
+    // clear variable / form values
+    $scope.clearForm = function () {
+        $scope.id = "";
+        $scope.name = "";
+
+    }
+    // create new console 
+    $scope.createConsole = function () {
+
+        // fields in key-value pairs
+        $http.post('Consoles/add.json', {
+            'name': $scope.name,
+        }
+        ).success(function (data, status, headers, config) {
+            //console.log(data.response.result);
+            // tell the user new console was created
+            //Materialize.toast(data.response.result, 4000);
+
+            // close modal
+            $('#modal-console-form').modal('close');
+
+            // clear modal content
+            $scope.clearForm();
+
+            // refresh the list
+            $scope.getAll();
+        });
+    }
+    // read console
+    $scope.getAll = function () {
+        $http.get("Consoles/index.json").success(function (response) {
+            $scope.names = response.consoles;
+        });
+    }
+    // retrieve record to fill out the form
+    $scope.readOne = function (id) {
+
+        // change modal title
+        $('#modal-console-title').text("Edit Console");
+
+        // show udpate console button
+        $('#btn-update-console').show();
+
+        // show create console button
+        $('#btn-create-console').hide();
+
+        // post id of console to be edited
+        $http.post('Consoles/view.json', {
+            'id': id
+        })
+                .success(function (data, status, headers, config) {
+
+                    // put the values in form
+                    
+                    $scope.id = data.console.id;
+                    $scope.name = data.console.name;
+                    // show modal
+                    $('#modal-console-form').modal('open');
+                })
+                .error(function (data, status, headers, config) {
+                    Materialize.toast('Unable to retrieve record.', 4000);
                 });
-            }
-        });
-    };
+    }
+    // update console record / save changes
+    $scope.updateConsole = function () {
+        $http.post('Consoles/edit.json', {
+            'id': $scope.id,
+            'name': $scope.name,
+        })
+                .success(function (data, status, headers, config) {
+                    // tell the user console record was updated
+                    console.log(data.response.result);
+                    //Materialize.toast(data.response.result, 4000);
 
-    ConsoleApp.getDone = function () {
-        $.get('consoles/get/1.json', function (response) {
-            $doneDiv = $('#done');
-            $doneDiv.empty();
-            $.each(response.consoles, function (key, value) {
-                $doneDiv.append('<div class="finished-task"><div class="finshed-task-text">' + value.console + '</div><div class="small">' + value.updated + '</div></div>');
-            });
-        });
-    };
+                    // close modal
+                    $('#modal-console-form').modal('close');
 
-    ConsoleApp.deleteConsole = function (id) {
-        $.get('consoles/delete/' + id + '.json',
-                function (response) {
-                    if (response.response.result == 'success') {
-                        $('#incomplete-' + id).hide('explode');
-                        $('#incomplete-' + id).remove();
-                        ConsoleApp.getConsoles();
-                        ConsoleApp.getDone();
-                    } else if (response.response.result == 'fail') {
-                        console.log('fail');
-                    }
-                }
-        );
-    };
+                    // clear modal content
+                    $scope.clearForm();
 
-    ConsoleApp.editConsole = function (id) {
-        var btnLabel = $("#consoleEdit_" + id).html();
-        if (btnLabel == "Edit") {
-            $("#consoleText_" + id).attr("readOnly", false);
-            $("#consoleEdit_" + id).text("Ok");
-        } else {
-            $("#consoleText_" + id).attr("readOnly", true);
-            $("#consoleEdit_" + id).text("Edit");
+                    // refresh the console list
+                    $scope.getAll();
+                });
+    }
+    // delete console
+    $scope.deleteConsole = function (id) {
 
-            console = $("#consoleText_" + id).val();
+        // ask the user if he is sure to delete the record
+        if (confirm("Are you sure?")) {
+            // post the id of console to be deleted
+            $http.post('Consoles/delete.json', {
+                'id': id
+            }).success(function (data, status, headers, config) {
 
-            var posting = $.post('consoles/edit.json', {
-                name: console,
-                id: id           
-            });
-            posting.done(function (response) {
-                if (response.response.result == 'success') {
-                    $('#incomplete-consoles').empty();
-                    $('#inputLarge').val('');
-                    ConsoleApp.getConsoles();
-                } else if (response.response.result == 'fail') {
-                    $('.form-group').addClass('has-error');
-                    $('#console-input').append('<div class="error" id="console-error">' + response.response.error.console + '</div>');
-                }
+                // tell the user console was deleted
+                console.log(data.response.result);
+                //Materialize.toast(data.response.result, 4000);
+
+                // refresh the list
+                $scope.getAll();
             });
         }
+    }
+});
 
-    };
+// jquery codes will be here
+$(document).ready(function () {
+    // initialize modal
+    $('.modal').modal();
+});
 
-})();
 
-(function ($) {
-	
-	$(document).on('click', '#submitButton', function () {
-        $('#console-error').remove();
-        $('.form-group').removeClass('has-error');
-        var $form = $('#add-console'),
-                console = $form.find("input[name='console']").val(),
-                url = $form.attr('action');
 
-        var posting = $.post(url, {name: console});
-        posting.done(function (response) {
-            if (response.response.result == 'success') {
-                $('#incomplete-consoles').empty();
-                $('#inputLarge').val('');
-                ConsoleApp.getConsoles();
-            } else if (response.response.result == 'fail') {
-                $('.form-group').addClass('has-error');
-                $('#console-input').append('<div class="error" id="console-error">' + response.response.error.console + '</div>');
-            }
-        });
-        event.preventDefault();
-    });
-
-    $(document).on('click', ':checkbox', function () {
-        var id = $(this).attr('id').replace('console_', '');
-        ConsoleApp.deleteConsole(id);
-    });
-    $(document).on('click', '.editButton', function () {
-        var id = $(this).attr('id').replace('consoleEdit_', '');
-        ConsoleApp.editConsole(id);
-    });
-
-    ConsoleApp.getConsoles();
-    ConsoleApp.getDone();
-})(jQuery);

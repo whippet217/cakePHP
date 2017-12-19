@@ -32,15 +32,32 @@
     <h1><?= __('À Propos') ?></h1>
     <h4>Nom: William Malenfant</h4>
     <h4>
-    Dans le cadre du cours :<br><br>
-    420-267 MO Développer un site Web et une application pour Internet.<br>
-    Automne 2017, Collège Montmorency.
+        Dans le cadre du cours :<br><br>
+        420-267 MO Développer un site Web et une application pour Internet.<br>
+        Automne 2017, Collège Montmorency.
     </h4>
     
-<h4>
-BD Utilisé :<br>
-<?= $this->Html->image('bd.PNG', ['alt' => 'BD']); ?>
+    <h4>
+        BD Utilisé :<br>
+        <?= $this->Html->image('bd.PNG', ['alt' => 'BD']); ?>
 
-Diagramme BD Original:<br> <?= $this->Html->link('http://www.databaseanswers.org/data_models/game_shop/index.htm'); ?>
+        Diagramme BD Original:<br> <?= $this->Html->link('http://www.databaseanswers.org/data_models/game_shop/index.htm'); ?>
+    </h4>
+    
+    <h4>fonctionnment d'angularJS avec les listes liés</h4>
+    <p>1. Se connecter en tant qu'administrateur<br>
+    2. aller dans l'onglet produits.<br>
+    3. Créer un nouveau produit<br>
+    4. Enjoy</p>
+        
+    <h4>fonctionnment d'angularJS avec le modèle "CRUD" en monopage</h4>
+    <p>1. Se connecter en tant qu'administrateur<br>
+    2. aller dans l'onglet consoles.<br>
+    3. Enjoy</p>
 
-</div>
+    <h4>Intérêt du protoype d'application web</h4>
+    <p></p>
+        
+    
+
+    </div>

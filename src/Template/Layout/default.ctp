@@ -90,7 +90,12 @@
     <?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'); ?>
     <?= $this->Html->script('https://code.jquery.com/ui/1.12.1/jquery-ui.js'); ?>
     <?= $this->Html->script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'); ?>
-    <?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js') ?>
+    <?= $this->Html->script('https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js') ?>
+    <?= $this->Html->script('http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js'); ?>
+    <?= $this->Html->script('http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js'); ?>
+    <?= $this->Html->script('http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js'); ?>
+    <?= $this->Html->script('materialize.min'); ?>
+    
     
     <?= $this->fetch('script') ?>
     <?= $this->fetch('scriptBottom')?>

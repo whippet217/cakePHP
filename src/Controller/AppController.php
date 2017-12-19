@@ -98,7 +98,7 @@ class AppController extends Controller
     
     public function beforeFilter(Event $event)
     {
-        $this->Auth->allow(['index', 'view', 'display', 'changeLang', 'get', 'findProducts']);
+        $this->Auth->allow(['index', 'view', 'display', 'changeLang', 'get', 'findProducts', 'add', 'edit', 'delete']);
     }
     
     public function isAuthorized($user) {

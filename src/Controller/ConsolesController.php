@@ -28,13 +28,12 @@ class ConsolesController extends AppController
      */
     public function index()
     {
-        //**Old Code**
-        /*
+
         $consoles = $this->paginate($this->Consoles);
 
         $this->set(compact('consoles'));
         $this->set('_serialize', ['consoles']);
-        */
+        
     }
 
     /**
@@ -46,9 +45,14 @@ class ConsolesController extends AppController
      */
     public function view($id = null)
     {
+        
+        $data = $this->request->input('json_decode');
+        
+        $id = $data->id;
+        
         $console = $this->Consoles->get($id, [
             'contain' => ['Products']
-        ]);
+            ]);
 
         $this->set('console', $console);
         $this->set('_serialize', ['console']);
@@ -61,19 +65,19 @@ class ConsolesController extends AppController
      */
     public function add()
     {
-        $response = ['result' => 'fail'];
-        $errors = $this->Consoles->validator()->errors($this->request->data);
-        if (empty($errors)) {
-            $console = $this->Consoles->newEntity($this->request->data);
+
+        $console = $this->Consoles->newEntity();
+        if ($this->request->is('post')) {
+            $console = $this->Consoles->patchEntity($console, $this->request->getData());
             if ($this->Consoles->save($console)) {
-                $response = ['result' => 'success'];
+                
+                $response = ['result' => 'Console was created.'];
+            } else {
+                $response['error'] = __('The console could not be saved. Please, try again.');
             }
-        } else {
-            $response['error'] = $errors;
         }
         $this->set(compact('response'));
         $this->set('_serialize', ['response']);
-        
         
         //**Old Code**
         /*$console = $this->Consoles->newEntity();
@@ -100,42 +104,45 @@ class ConsolesController extends AppController
      */
     public function edit($id = null)
     {
-        $response = ['result' => 'fail'];
-        $errors = $this->Consoles->validator()->errors($this->request->data);
-        if (empty($errors)) {
-            $console = $this->Consoles->get($this->request->data['id']);
-            $console = $this->Consoles->patchEntity($console, $this->request->data);
+        $data = $this->request->input('json_decode');
+        
+        $id = $data->id;
 
+        $console = $this->Consoles->get($id, [
+            'contain' => []
+            ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            $console = $this->Consoles->patchEntity($concole, $this->request->getData());
             if ($this->Consoles->save($console)) {
-                $response = ['result' => 'success'];
+                $response = ['result' => 'Console was updated.'];
+            } else {
+                $response['error'] = __('The console could not be saved. Please, try again.');
             }
-        } else {
-            $response['error'] = $errors;
         }
         $this->set(compact('response'));
         $this->set('_serialize', ['response']);
         
-        
-        
-        //**Old Code**
-        /*
-        $console = $this->Consoles->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $console = $this->Consoles->patchEntity($console, $this->request->getData());
-            if ($this->Consoles->save($console)) {
-                $this->Flash->success(__('The console has been saved.'));
+                //**AJAX CODE**
+                /*
+                $response = ['result' => 'fail'];
+                $errors = $this->Consoles->validator()->errors($this->request->data);
+                if (empty($errors)) {
+                    $console = $this->Consoles->get($this->request->data['id']);
+                    $console = $this->Consoles->patchEntity($console, $this->request->data);
 
-                return $this->redirect(['action' => 'index']);
+                    if ($this->Consoles->save($console)) {
+                        $response = ['result' => 'success'];
+                    }
+                } else {
+                    $response['error'] = $errors;
+                }
+                $this->set(compact('response'));
+                $this->set('_serialize', ['response']);
+                
+                */
+                
             }
-            $this->Flash->error(__('The console could not be saved. Please, try again.'));
-        }
-        $this->set(compact('console'));
-        $this->set('_serialize', ['console']);
-        */
-    }
-    
+            
     /**
      * gets either done or incomplete to-do's depending on the status
      *
@@ -159,6 +166,20 @@ class ConsolesController extends AppController
      */
     public function delete($consoleId = null)
     {
+        
+        $response = ['result' => 'fail'];
+
+        $console = $this->Consoles->get($this->request->data['id']);
+
+        if ($this->Consoles->delete($console)) {
+            $response = ['result' => 'success'];
+        }
+
+        $this->set(compact('response'));
+        $this->set('_serialize', ['response']);
+        
+        //**AJAX CODE**
+        /*
         $response = ['result' => 'fail'];
         if (!is_null($consoleId)) {
             $consoles = TableRegistry::get('Consoles');
@@ -169,7 +190,10 @@ class ConsolesController extends AppController
         }
         $this->set(compact('response'));
         $this->set('_serialize', ['response']);
+        */
         
+        
+        //**OLD CODE**
         /*
         $this->request->allowMethod(['post', 'delete']);
         $console = $this->Consoles->get($id);
@@ -196,4 +220,6 @@ class ConsolesController extends AppController
         $this->set(compact('response'));
         $this->set('_serialize', ['response']);
     }
+    
+    
 }
