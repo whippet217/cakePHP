@@ -104,15 +104,15 @@ class ConsolesController extends AppController
      */
     public function edit($id = null)
     {
+
         $data = $this->request->input('json_decode');
         
         $id = $data->id;
-
         $console = $this->Consoles->get($id, [
             'contain' => []
             ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $console = $this->Consoles->patchEntity($concole, $this->request->getData());
+            $console = $this->Consoles->patchEntity($console, $this->request->getData());
             if ($this->Consoles->save($console)) {
                 $response = ['result' => 'Console was updated.'];
             } else {

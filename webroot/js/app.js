@@ -87,7 +87,7 @@ app.controller('consolesCtrl', function ($scope, $http) {
         })
                 .success(function (data, status, headers, config) {
                     // tell the user console record was updated
-                    console.log(data.response.result);
+                    //console.log(data.response.result);
                     //Materialize.toast(data.response.result, 4000);
 
                     // close modal
